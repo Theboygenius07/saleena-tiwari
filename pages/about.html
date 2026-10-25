@@ -28,6 +28,7 @@
     <section class="stage" id="stage" aria-label="Passport">
       <h1 class="sr-only">Saleena Tiwari</h1>
       <div class="stage__sticky">
+        <div class="pp" id="pp">
         <!-- the pages underneath, and a boarding pass tucked between them -->
         <div class="pp-base" id="pp-base" aria-hidden="true">
           <div class="ticket">
@@ -73,15 +74,21 @@
         <!-- the cover, hinged on the spine: its inside is the scrapbook page -->
         <div class="pp-cover" id="pp-cover">
           <div class="cover__face">
-            <img class="cover__crest" src="../assets/illustrations/cover-crest.svg" alt="" />
-            <p class="cover__word">Passport</p>
-            <p class="cover__langs">Reisepass · राहदानी</p>
-            <p class="cover__owner">Saleena Tiwari</p>
-            <img class="sticker" src="../assets/illustrations/visa-01-cohort.svg" alt="" style="--w:34%;left:-9%;top:9%;--r:-12deg" />
-            <img class="sticker" src="../assets/illustrations/visa-07-greentop.svg" alt="" style="--w:36%;right:-12%;bottom:15%;--r:9deg" />
-            <img class="sticker sticker--flat" src="../assets/illustrations/postage-stamp.svg" alt="" style="--w:23%;right:7%;top:5%;--r:7deg" />
-            <img class="sticker" src="../assets/illustrations/doodle-star.svg" alt="" style="--w:13%;left:12%;bottom:9%;--r:-8deg" />
-            <span class="tape tape--mustard" style="--tw:38%;left:-6%;bottom:30%;--tr:-24deg"></span>
+            <span class="cover__frame" aria-hidden="true"></span>
+            <div class="cover__top">
+              <p class="cover__name foil">Saleena Tiwari</p>
+              <p class="cover__sub foil">Portfolio · MMXXVI</p>
+            </div>
+            <div class="cover__mid">
+              <span class="cover__crest foil" aria-hidden="true"></span>
+              <p class="cover__word foil">Passport</p>
+              <p class="cover__langs foil">Reisepass · राहदानी</p>
+            </div>
+            <span class="cover__chip foil" aria-hidden="true"></span>
+            <span class="cover__light" aria-hidden="true"></span>
+            <!-- stuck on along the way -->
+            <img class="sticker" src="../assets/illustrations/visa-01-cohort.svg" alt="" style="--w:31%;left:-11%;bottom:7%;--r:-11deg" />
+            <img class="sticker sticker--flat sticker--stamp" src="../assets/illustrations/postage-stamp.svg" alt="" style="--w:21%;right:-6%;top:52%;--r:9deg" />
           </div>
           <div class="cover__inside">
             <p class="inside__belongs">This passport belongs to a builder.</p>
@@ -95,6 +102,7 @@
             <img class="inside__stamp" src="../assets/illustrations/stamp-04-rise-fellow.svg" alt="" />
             <p class="inside__note">places, people, things I built</p>
           </div>
+        </div>
         </div>
 
         <p class="stage__hint" id="stage-hint">Scroll to open, or pick a page</p>

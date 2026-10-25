@@ -8,6 +8,7 @@
   /* one unit for everything inside a page: a share of the page's width, or of its height when that's tighter */
   --u: min(1cqw, .704cqh); }
 .stage__sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.pp { position: absolute; inset: 0; transform-origin: var(--ox, 50%) var(--oy, 50%); }
 .pp-base, .pp-page, .pp-cover { position: absolute; left: 0; top: 0; will-change: transform; }
 .pp-base { z-index: 1; }
 .pp-page { z-index: 2; container-type: size; overflow: hidden; }
@@ -96,20 +97,55 @@
 /* ── The cover ── */
 .cover__face, .cover__inside { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .cover__face {
-  container-type: size;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-  border-radius: 4px 14px 14px 4px; color: var(--gold);
-  background-color: var(--wine);
-  /* leather grain, and the crease of the spine */
+  /* the light on the leather follows the cursor (--lx, --ly); the foil catches it (--gx) */
+  --foil: linear-gradient(110deg, #9a7632 0%, #d6b462 13%, #f7e6ad 25%, #d8b766 36%, #fff6d6 46%, #c9a250 57%, #f0d98f 70%, #a8853a 84%, #e2c477 100%);
+  container-type: size; isolation: isolate;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center;
+  padding: 12.5cqh calc(var(--u) * 9) 7.5cqh;
+  border-radius: 4px 16px 16px 4px;
+  background-color: #4e0b1b;
   background-image:
-    linear-gradient(90deg, rgba(0, 0, 0, .22), rgba(0, 0, 0, 0) 7%, rgba(255, 255, 255, .05) 8%, rgba(255, 255, 255, 0) 9.5%),
-    radial-gradient(rgba(0, 0, 0, .12) 1px, transparent 1.4px), radial-gradient(rgba(255, 255, 255, .03) 1px, transparent 1.4px);
-  background-size: 100% 100%, 5px 5px, 7px 7px;
+    /* the crease where the cover bends at the spine */
+    linear-gradient(90deg, rgba(0, 0, 0, .38) 0, rgba(0, 0, 0, .12) 3%, rgba(255, 255, 255, .07) 5.4%, rgba(0, 0, 0, .14) 7%, rgba(0, 0, 0, 0) 10.5%),
+    /* soft fall-off toward the edges */
+    radial-gradient(130% 100% at 50% 45%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, .3) 100%),
+    /* pebbled leather, then a fine grain over it */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='turbulence' baseFrequency='.22' numOctaves='2' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1.6 1.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)' opacity='.22'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.15' numOctaves='3' seed='9' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .7 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+    radial-gradient(160% 120% at 30% 0%, #6d1428 0%, #4e0b1b 55%, #3f0815 100%);
+  background-size: 100% 100%, 100% 100%, 240px 240px, 180px 180px, 100% 100%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05), inset -1px -1px 0 1px rgba(0, 0, 0, .18);
 }
-.cover__crest { width: calc(var(--u) * 34); }
-.cover__word { margin-top: calc(var(--u) * 5); font-size: calc(var(--u) * 3.6); font-weight: 560; letter-spacing: .5em; text-transform: uppercase; padding-left: .5em; }
-.cover__langs { margin-top: calc(var(--u) * 1.6); font-size: calc(var(--u) * 2.3); letter-spacing: .32em; text-transform: uppercase; opacity: .75; padding-left: .32em; }
-.cover__owner { position: absolute; bottom: 7%; left: 0; right: 0; font-size: calc(var(--u) * 2.3); letter-spacing: .32em; text-transform: uppercase; opacity: .6; padding-left: .32em; }
+/* a blind-pressed border, a little in from the edge */
+.cover__frame {
+  position: absolute; inset: calc(var(--u) * 4.2) calc(var(--u) * 4.2) calc(var(--u) * 4.2) calc(var(--u) * 7.5); border-radius: 3px 10px 10px 3px; pointer-events: none;
+  border: 1px solid rgba(0, 0, 0, .3); box-shadow: 0 1px 0 rgba(255, 255, 255, .06), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+/* the light on the leather, wherever the cursor is */
+.cover__light { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 1; mix-blend-mode: soft-light;
+  background: radial-gradient(70% 55% at var(--lx, 32%) var(--ly, 22%), rgba(255, 236, 214, .32), rgba(255, 236, 214, 0) 70%); }
+/* gold foil, hot-stamped: a metal gradient clipped to each mark, pressed just below the surface */
+.foil { background: var(--foil); background-size: 260% 100%; background-position: var(--gx, 50%) 50%; filter: drop-shadow(0 1px 0 rgba(0, 0, 0, .45)); position: relative; z-index: 2; }
+p.foil { -webkit-background-clip: text; background-clip: text; color: transparent; }
+.cover__top, .cover__mid { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+.cover__mid { margin-top: 9cqh; }
+.cover__chip { margin-top: auto; }
+.cover__name { font-family: var(--serif); font-size: calc(var(--u) * 7); letter-spacing: .16em; text-transform: uppercase; line-height: 1; padding-left: .16em; }
+.cover__sub { margin-top: calc(var(--u) * 2.8); font-size: calc(var(--u) * 2.7); font-weight: 560; letter-spacing: .42em; text-transform: uppercase; line-height: 1; padding-left: .42em; }
+.cover__crest {
+  display: block; width: calc(var(--u) * 46); aspect-ratio: 1;
+  -webkit-mask: url("../assets/illustrations/cover-crest.svg") center / contain no-repeat; mask: url("../assets/illustrations/cover-crest.svg") center / contain no-repeat;
+}
+.cover__word { margin-top: calc(var(--u) * 5.5); font-size: calc(var(--u) * 5); font-weight: 560; letter-spacing: .62em; text-transform: uppercase; line-height: 1; padding-left: .62em; }
+.cover__langs { margin-top: calc(var(--u) * 2.8); font-size: calc(var(--u) * 2.7); font-weight: 560; letter-spacing: .36em; text-transform: uppercase; line-height: 1; padding-left: .36em; }
+/* the e-passport chip symbol */
+.cover__chip {
+  display: block; width: calc(var(--u) * 11.5); aspect-ratio: 62 / 40;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 62 40'%3E%3Crect x='2' y='2' width='58' height='36' rx='5' fill='none' stroke='%23000' stroke-width='3'/%3E%3Ccircle cx='31' cy='20' r='8.5' fill='none' stroke='%23000' stroke-width='3'/%3E%3Cpath d='M2 20h14.5M45.5 20H60' stroke='%23000' stroke-width='3'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 62 40'%3E%3Crect x='2' y='2' width='58' height='36' rx='5' fill='none' stroke='%23000' stroke-width='3'/%3E%3Ccircle cx='31' cy='20' r='8.5' fill='none' stroke='%23000' stroke-width='3'/%3E%3Cpath d='M2 20h14.5M45.5 20H60' stroke='%23000' stroke-width='3'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.cover__face .sticker { z-index: 3; }
+.sticker--stamp { outline: none; }
 /* stickers: die-cut with a white edge, stuck on at an angle */
 .sticker {
   position: absolute; width: var(--w, 30%); height: auto; transform: rotate(var(--r, 0deg)); pointer-events: none;

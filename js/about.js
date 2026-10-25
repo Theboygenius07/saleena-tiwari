@@ -16,6 +16,8 @@
     vw = sticky.clientWidth; vh = sticky.clientHeight; wide = vw >= 760 && vw > vh;
     // the closed passport: ICAO booklet proportions (88 × 125 mm)
     hb = Math.min(vh * .64, 620, (vw * .72) / .704); wb = hb * .704;
+    const ppEl = document.getElementById("pp");
+    if (ppEl) { ppEl.style.setProperty("--ox", vw / 2 + "px"); ppEl.style.setProperty("--oy", (vh - hb) / 2 + 12 + hb / 2 + "px"); }
   };
   // where the spine sits and how big a page is, for a given point in the move
   const geo = (p, toPage) => {
@@ -48,13 +50,45 @@
     cover.firstElementChild.style.opacity = cover.lastElementChild.style.opacity = fade;
     page.style.setProperty("--print", (1 - Z * .55).toFixed(3));
     page.style.setProperty("--edge", (.12 * (1 - Z)).toFixed(3));
-    const [r2, r10] = radius(Z);
-    page.style.borderRadius = cover.firstElementChild.style.borderRadius = `${r2} ${r10} ${r10} ${r2}`;
+    const [r2, r10] = radius(Z), r4 = (4 * (1 - Z)).toFixed(1) + "px", r16 = (16 * (1 - Z)).toFixed(1) + "px";
+    page.style.borderRadius = `${r2} ${r10} ${r10} ${r2}`;
+    cover.firstElementChild.style.borderRadius = `${r4} ${r16} ${r16} ${r4}`;
     cover.lastElementChild.style.borderRadius = `${r10} ${r2} ${r2} ${r10}`;
     stage.style.setProperty("--hint", (1 - clamp01(p * 9)).toFixed(3));
     if (tpl.firstChild) tpl.style.transform = `scale(${(pw / vw).toFixed(4)})`;
     if (B > .85) stage.classList.add("is-open");
   };
+
+  /* while it's closed, the passport leans toward the cursor and its foil catches the light */
+  const pp = document.getElementById("pp"), face = cover.firstElementChild;
+  const lean = { tx: 0, ty: 0, gx: 50, lx: 32, ly: 22, T: { tx: 0, ty: 0, gx: 50, lx: 32, ly: 22 }, raf: 0 };
+  const leanTick = () => {
+    const closed = 1 - clamp01(cur * 14);             // gone as soon as it starts to open
+    let moving = false;
+    for (const k of ["tx", "ty", "gx", "lx", "ly"]) {
+      const goal = k === "tx" || k === "ty" ? lean.T[k] * closed : lean.T[k];
+      lean[k] += (goal - lean[k]) * .09;
+      if (Math.abs(goal - lean[k]) > .02) moving = true;
+    }
+    const still = Math.abs(lean.tx) < .01 && Math.abs(lean.ty) < .01;
+    pp.style.transform = still ? "" : `perspective(1400px) rotateX(${lean.ty.toFixed(2)}deg) rotateY(${lean.tx.toFixed(2)}deg)`;
+    face.style.setProperty("--gx", lean.gx.toFixed(1) + "%");
+    face.style.setProperty("--lx", lean.lx.toFixed(1) + "%");
+    face.style.setProperty("--ly", lean.ly.toFixed(1) + "%");
+    lean.raf = moving ? requestAnimationFrame(leanTick) : 0;
+  };
+  if (!reduce && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    addEventListener("pointermove", (e) => {
+      const nx = e.clientX / innerWidth * 2 - 1, ny = e.clientY / innerHeight * 2 - 1;
+      const r = face.getBoundingClientRect();
+      Object.assign(lean.T, {
+        tx: nx * 7, ty: -ny * 6, gx: 50 - nx * 40,
+        lx: ((e.clientX - r.left) / r.width) * 100, ly: ((e.clientY - r.top) / r.height) * 100,
+      });
+      if (!lean.raf) lean.raf = requestAnimationFrame(leanTick);
+    }, { passive: true });
+    addEventListener("scroll", () => { if (!lean.raf) lean.raf = requestAnimationFrame(leanTick); }, { passive: true });
+  }
 
   let cur = 0, target = 0, raf = 0, auto = null;
   const scrollP = () => {
