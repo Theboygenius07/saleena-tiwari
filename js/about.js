@@ -10,7 +10,7 @@
   const clamp01 = (v) => Math.min(1, Math.max(0, v));
   const easeIO = (t) => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
   const mix = (a, b, t) => a + (b - a) * t;
-  let vw = 0, vh = 0, wb = 0, hb = 0, wide = true, plateW = 0, plateH = 0, stageTop = 0, stageH = 0, animSpan = 0, holdSpan = 0;
+  let vw = 0, vh = 0, wb = 0, hb = 0, wide = true, plateW = 0, plateH = 0, stageTop = 0, stageH = 0;
   let blend = 0;      // 0 = zoom into the open spread, 1 = zoom into the data page alone
   const dpPlate = document.getElementById("dp-plate"), inPlate = document.getElementById("in-plate");
   const face = cover.firstElementChild, inside = cover.lastElementChild, hint = document.getElementById("stage-hint");
@@ -24,8 +24,6 @@
     stage.style.setProperty("--plate-w", plateW.toFixed(1) + "px");
     stage.style.setProperty("--plate-h", plateH.toFixed(1) + "px");
     stageTop = stage.getBoundingClientRect().top + scrollY; stageH = stage.offsetHeight;
-    // the scroll it takes to open and zoom; whatever's left of the stage is the hold before the rest of the page
-    animSpan = vh * (wide ? 2 : 2.6); holdSpan = Math.max(0, stageH - vh - animSpan);
     const ppEl = document.getElementById("pp");
     if (ppEl) { ppEl.style.setProperty("--ox", vw / 2 + "px"); ppEl.style.setProperty("--oy", vh / 2 + 12 + "px"); }
     last = {};
@@ -146,17 +144,8 @@
     document.title = want === "about" ? "About · Saleena Tiwari" : "Saleena Tiwari";
     if (aboutTile) want === "about" ? aboutTile.setAttribute("aria-current", "page") : aboutTile.removeAttribute("aria-current");
   };
-  // "open" means the end of the zoom, not the end of the hold that follows it
-  const stageEnd = () => stageTop + animSpan;
-  const scrollP = () => (animSpan > 0 ? clamp01((scrollY - stageTop) / animSpan) : 1);
-  // the hold: the open spread stays on screen, and a line fills as you keep scrolling toward the rest
-  const more = document.getElementById("stage-more"), moreFill = document.getElementById("stage-more-fill");
-  const holdP = () => (holdSpan > 0 ? clamp01((scrollY - stageTop - animSpan) / holdSpan) : 1);
-  const renderHold = () => {
-    const h = holdP(), show = scrollY > stageTop + animSpan * .97 && h < 1;
-    set(more, "mo", "opacity", show ? Math.min(1, (scrollY - stageTop - animSpan * .97) / (vh * .12)).toFixed(3) : "0");
-    set(moreFill, "mf", "transform", `scaleX(${h.toFixed(3)})`);
-  };
+  const stageEnd = () => stageTop + stageH - vh;
+  const scrollP = () => { const span = stageH - vh; return span > 0 ? clamp01((scrollY - stageTop) / span) : 1; };
   const tick = (now) => {
     raf = 0;
     if (auto) {
@@ -168,7 +157,7 @@
       else location.href = auto.href;
       return;
     }
-    cur = target = scrollP(); render(cur); renderHold();
+    cur = target = scrollP(); render(cur);
   };
   // the scroll is already smoothed by Lenis: follow it exactly, in the same frame it moves
   const read = () => { if (auto) return; if (!raf) raf = requestAnimationFrame(tick); };
@@ -196,7 +185,7 @@
       if (document.readyState === "complete") requestAnimationFrame(settle); else addEventListener("load", () => requestAnimationFrame(settle), { once: true });
     }
     cur = target = scrollP(); warmUp();
-    if (window.lenis) window.lenis.on("scroll", () => { if (!auto) { cur = target = scrollP(); render(cur); renderHold(); } });
+    if (window.lenis) window.lenis.on("scroll", () => { if (!auto) { cur = target = scrollP(); render(cur); } });
     else addEventListener("scroll", read, { passive: true });
     addEventListener("resize", () => { measure(); cur = target = scrollP(); warmUp(); });
     if (document.fonts) document.fonts.ready.then(() => { measure(); render(cur); });

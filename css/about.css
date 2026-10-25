@@ -4,7 +4,7 @@
    with the page as it grows. */
 
 /* ── The stage ── */
-.stage { position: relative; height: 460svh;   /* 100 on screen, 200 to open and zoom, 160 held */
+.stage { position: relative; height: 300svh;
   /* one unit for everything inside a page: a share of the page's width, or of its height when that's tighter */
   --u: min(1cqw, .704cqh); }
 .stage__sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
@@ -13,13 +13,6 @@
 .pp-base { z-index: 1; }
 .pp-page { z-index: 2; overflow: hidden; }
 .pp-cover { z-index: 3; transform-style: preserve-3d; }
-.stage__more {
-  position: absolute; left: 0; right: 0; bottom: 4.5svh; z-index: 6; pointer-events: none;
-  display: flex; flex-direction: column; align-items: center; gap: .6rem; opacity: 0;
-  font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
-}
-.stage__more i { display: block; width: 7rem; height: 2px; background: rgba(28, 25, 24, .12); border-radius: 1px; overflow: hidden; }
-.stage__more b { display: block; height: 100%; background: var(--wine); transform-origin: left center; transform: scaleX(0); }
 .stage__hint {
   position: absolute; left: 0; right: 0; bottom: 4.5svh; text-align: center; pointer-events: none;
   font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
@@ -243,7 +236,7 @@ p.foil { -webkit-background-clip: text; background-clip: text; color: transparen
 @media (max-width: 760px) {
   .stamps-side { padding-top: 0; display: flex; align-items: baseline; justify-content: space-between; }
   .stamps-hint { margin-top: 0; font-size: 1.25rem; }
-  .stage { height: 520svh; }   /* 100 on screen, 260 to open, zoom and slide across, 160 held */
+  .stage { height: 360svh; }   /* open, zoom into the scrapbook page, slide across to the data page */
   .stamps { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 1rem; padding: 1.25rem; }
   .stamps__page-head { grid-column: 1 / -1; }
   .stamp { --base: translate(0, 0); position: relative; left: auto; top: auto; width: 100%; transform: rotate(var(--r, 0deg)); }
