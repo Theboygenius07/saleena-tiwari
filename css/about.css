@@ -9,10 +9,10 @@
   --u: min(1cqw, .704cqh); }
 .stage__sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
 .pp { position: absolute; inset: 0; transform-origin: var(--ox, 50%) var(--oy, 50%); }
-.pp-base, .pp-page, .pp-cover { position: absolute; left: 0; top: 0; will-change: transform; }
+.pp-base, .pp-page, .pp-cover { position: absolute; left: 0; top: 0; transform-origin: 0 50%; will-change: transform; }
 .pp-base { z-index: 1; }
-.pp-page { z-index: 2; container-type: size; overflow: hidden; }
-.pp-cover { z-index: 3; transform-origin: 0 50%; transform-style: preserve-3d; }
+.pp-page { z-index: 2; overflow: hidden; }
+.pp-cover { z-index: 3; transform-style: preserve-3d; }
 .stage__hint {
   position: absolute; left: 0; right: 0; bottom: 4.5svh; text-align: center; pointer-events: none;
   font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
@@ -45,12 +45,16 @@
   background: #fff; border-radius: 2px 10px 10px 2px; border: 1px solid rgba(28, 25, 24, var(--edge, .12));
   color: #221d1c;
 }
-.pp-page::before { /* faint security print, and the curve of the page into the spine */
+.pp-page::before { /* the curve of the page into the spine */
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(28, 25, 24, .045), rgba(28, 25, 24, 0) 4%),
-    url("../assets/illustrations/guilloche.svg") 40% 45% / 240% auto no-repeat;
-  opacity: var(--print, 1);
+  background: linear-gradient(90deg, rgba(28, 25, 24, .045), rgba(28, 25, 24, 0) 4%);
+}
+/* Each page's content is laid out once, at the size it ends up on screen, and only ever scaled:
+   the zoom is a transform the graphics card does, with no re-layout or re-drawing per frame. */
+.pp-plate { position: absolute; left: 0; top: 0; width: var(--plate-w, 600px); height: var(--plate-h, 850px); container-type: size; transform-origin: 0 0; will-change: transform; }
+#dp-plate::before { /* faint security print */
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .6;
+  background: url("../assets/illustrations/guilloche.svg") 40% 45% / 240% auto no-repeat;
 }
 .dp {
   position: absolute; inset: 0; padding: 10cqh calc(var(--u) * 7) 0;
@@ -91,8 +95,7 @@
 /* the opening of another page, drawn at full size and scaled into the data page */
 .pp-tpl { position: absolute; left: 0; top: 0; transform-origin: 0 0; display: none; background: #fff; }
 .pp-page.is-template .pp-tpl { display: block; }
-.pp-page.is-template .dp { display: none; }
-.pp-page.is-template::before { display: none; }
+.pp-page.is-template #dp-plate { display: none; }
 
 /* ── The cover ── */
 .cover__face, .cover__inside { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
@@ -155,7 +158,7 @@ p.foil { -webkit-background-clip: text; background-clip: text; color: transparen
 
 /* the inside of the cover: the scrapbook page */
 .cover__inside {
-  container-type: size; transform: rotateY(180deg); overflow: hidden;
+  transform: rotateY(180deg); overflow: hidden;
   border-radius: 10px 2px 2px 10px; background: #fff; border: 1px solid rgba(28, 25, 24, .12);
 }
 .cover__inside::before { /* the curve of the page into the spine */
