@@ -2,13 +2,13 @@
 
 A static site: plain HTML, CSS and JavaScript, no build step. The About page opens on a passport. Scrolling opens it and zooms the open spread into the page.
 
-- Pages live in `pages/`. `/` redirects to `pages/about.html`.
+- Pages sit at the root with clean addresses: `/` (the passport, also `/about`), `/projects`, `/craft`, `/education` and `/contact`. `vercel.json` sets this up, and old `/pages/…` links redirect.
 - Content (projects, honors, skills) lives in `js/data.js`.
 - Illustrations live in `assets/illustrations/`. They're drawn in code by `source/illustrations.mjs`.
 
 ## Run it locally
 
-Double-click `start.command`, or run `python3 -m http.server` in this folder and open http://localhost:8000.
+Double-click `start.command`, or run `python3 serve.py` and open http://localhost:8000. `serve.py` serves the same clean addresses Vercel does.
 
 ## Deploy on Vercel
 

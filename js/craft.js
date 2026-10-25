@@ -44,7 +44,7 @@
   spin.rotation.y = angle;
   const size = () => { const w = wrap.clientWidth, h = wrap.clientHeight; if (!w || !h) return; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); dirty = true; };
   size(); addEventListener("resize", size);
-  new THREE.GLTFLoader().load("../GLB/mini-me/saleena-girl.glb", (g) => {
+  new THREE.GLTFLoader().load("/GLB/mini-me/saleena-girl.glb", (g) => {
     const m = g.scene; let box = new THREE.Box3().setFromObject(m); const s = new THREE.Vector3(); box.getSize(s);
     m.scale.setScalar(2.15 / (s.y || 1)); box = new THREE.Box3().setFromObject(m); const c = new THREE.Vector3(); box.getCenter(c);
     m.position.sub(c); spin.add(m); dirty = true;

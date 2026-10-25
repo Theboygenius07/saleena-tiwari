@@ -12,14 +12,14 @@
   if (barSlot) {
     barSlot.outerHTML = `
       <header class="bar" id="bar">
-        <a class="bar__mark" href="about.html" aria-label="Saleena Tiwari, home">ST</a>
+        <a class="bar__mark" href="/" aria-label="Saleena Tiwari, home">ST</a>
         <nav aria-label="Pages">
           <ul class="bar__links" id="bar-links">
-            ${PAGES.filter(([slug]) => slug !== "contact").map(([slug, label]) => `<li><a href="${slug}.html"${slug === here ? ' aria-current="page"' : ""}>${label}</a></li>`).join("")}
+            ${PAGES.filter(([slug]) => slug !== "contact").map(([slug, label]) => `<li><a href="/${slug}"${slug === here ? ' aria-current="page"' : ""}>${label}</a></li>`).join("")}
           </ul>
         </nav>
         <button class="bar__menu" type="button" aria-expanded="false" aria-controls="bar-links">Menu</button>
-        <a class="bar__cta" href="contact.html"${here === "contact" ? ' aria-current="page"' : ""}>Say hello <span aria-hidden="true">→</span></a>
+        <a class="bar__cta" href="/contact"${here === "contact" ? ' aria-current="page"' : ""}>Say hello <span aria-hidden="true">→</span></a>
       </header>`;
     bar = document.getElementById("bar");
     const btn = bar.querySelector(".bar__menu");
@@ -43,7 +43,7 @@
         <div class="back-cover__inner">
           <p class="kicker">Back cover</p>
           <h2>${onContact ? "Safe travels. See you soon." : "Write me a postcard."}</h2>
-          ${onContact ? "" : `<a class="btn btn--light" href="contact.html">Say hello <span class="btn__arrow" aria-hidden="true">→</span></a>`}
+          ${onContact ? "" : `<a class="btn btn--light" href="/contact">Say hello <span class="btn__arrow" aria-hidden="true">→</span></a>`}
         </div>
         <div class="back-cover__foot">
           <span>© ${new Date().getFullYear()} Saleena Tiwari</span>

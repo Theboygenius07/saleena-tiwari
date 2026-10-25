@@ -30,7 +30,7 @@
             <div><dt>Entries</dt><dd>Multiple</dd></div>
           </dl>
           <p class="visa__mrz" aria-hidden="true">${esc(mrz(p))}</p>
-          <img class="visa__granted thunk" src="../assets/illustrations/stamp-granted.svg" alt="" style="--r:${[-12, 8, -6, 11, -9, 5, -14][i % 7]}deg;--delay:.25s" />
+          <img class="visa__granted thunk" src="/assets/illustrations/stamp-granted.svg" alt="" style="--r:${[-12, 8, -6, 11, -9, 5, -14][i % 7]}deg;--delay:.25s" />
         </aside>
         <div class="visa__body">
           <h2 class="visa__title">${esc(p.title)}</h2>

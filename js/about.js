@@ -126,7 +126,7 @@
   window.passportGo = (a) => {
     if (reduce || auto || cur > .97) return false;
     const href = a.getAttribute("href");
-    if (/about\.html$/.test(href)) {
+    if (href === "/" || href === "/about") {
       const end = stage.getBoundingClientRect().top + scrollY + stage.offsetHeight - vh;
       if (window.lenis) window.lenis.scrollTo(end, { duration: 1.6 }); else scrollTo({ top: end, behavior: "smooth" });
       return true;
@@ -192,7 +192,7 @@
   const reel = document.getElementById("reel"), fly = document.getElementById("fly");
   const items = [];
   S.projects.forEach((p, i) => {
-    items.push({ key: "p" + i, src: p.thumb, label: p.title, href: "projects.html#" + p.slug });
+    items.push({ key: "p" + i, src: p.thumb, label: p.title, href: "/projects#" + p.slug });
     const h = S.honours[i]; if (h) items.push({ key: "h" + i, src: h.photo, label: h.title, href: "#stamps", stamp: h.stamp });
   });
   S.honours.slice(S.projects.length).forEach((h, j) => items.push({ key: "h" + (S.projects.length + j), src: h.photo, label: h.title, href: "#stamps", stamp: h.stamp }));

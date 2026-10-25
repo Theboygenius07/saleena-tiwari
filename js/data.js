@@ -62,9 +62,9 @@ window.SITE = {
    "n": "01",
    "slug": "cohort",
    "title": "Cohort",
-   "image": "../images/web/main-cohort2-1200.webp",
-  "thumb": "../images/web/main-cohort2-640.webp",
-   "visa": "../assets/illustrations/visa-01-cohort.svg",
+   "image": "/images/web/main-cohort2-1200.webp",
+  "thumb": "/images/web/main-cohort2-640.webp",
+   "visa": "/assets/illustrations/visa-01-cohort.svg",
    "filters": [
     "entrepreneurship",
     "ai"
@@ -125,9 +125,9 @@ window.SITE = {
    "n": "02",
    "slug": "pantry",
    "title": "Pantry",
-   "image": "../images/web/main-pantry-1200.webp",
-  "thumb": "../images/web/main-pantry-640.webp",
-   "visa": "../assets/illustrations/visa-02-pantry.svg",
+   "image": "/images/web/main-pantry-1200.webp",
+  "thumb": "/images/web/main-pantry-640.webp",
+   "visa": "/assets/illustrations/visa-02-pantry.svg",
    "filters": [
     "entrepreneurship"
    ],
@@ -170,9 +170,9 @@ window.SITE = {
    "n": "03",
    "slug": "hypehub",
    "title": "HypeHub",
-   "image": "../images/web/main-hypehub-1200.webp",
-  "thumb": "../images/web/main-hypehub-640.webp",
-   "visa": "../assets/illustrations/visa-03-hypehub.svg",
+   "image": "/images/web/main-hypehub-1200.webp",
+  "thumb": "/images/web/main-hypehub-640.webp",
+   "visa": "/assets/illustrations/visa-03-hypehub.svg",
    "filters": [
     "ai",
     "data"
@@ -216,9 +216,9 @@ window.SITE = {
    "n": "04",
    "slug": "x-automation",
    "title": "X Post Automation",
-   "image": "../images/web/main-x-automation-1200.webp",
-  "thumb": "../images/web/main-x-automation-640.webp",
-   "visa": "../assets/illustrations/visa-04-x-automation.svg",
+   "image": "/images/web/main-x-automation-1200.webp",
+  "thumb": "/images/web/main-x-automation-640.webp",
+   "visa": "/assets/illustrations/visa-04-x-automation.svg",
    "filters": [
     "ai"
    ],
@@ -257,9 +257,9 @@ window.SITE = {
    "n": "05",
    "slug": "linkedin-scraper",
    "title": "LinkedIn Scraper",
-   "image": "../images/web/main-linkedin-scraper-1200.webp",
-  "thumb": "../images/web/main-linkedin-scraper-640.webp",
-   "visa": "../assets/illustrations/visa-05-linkedin-scraper.svg",
+   "image": "/images/web/main-linkedin-scraper-1200.webp",
+  "thumb": "/images/web/main-linkedin-scraper-640.webp",
+   "visa": "/assets/illustrations/visa-05-linkedin-scraper.svg",
    "filters": [
     "ai",
     "data"
@@ -298,9 +298,9 @@ window.SITE = {
    "n": "06",
    "slug": "yap",
    "title": "YAP",
-   "image": "../images/web/main-yap-1200.webp",
-  "thumb": "../images/web/main-yap-640.webp",
-   "visa": "../assets/illustrations/visa-06-yap.svg",
+   "image": "/images/web/main-yap-1200.webp",
+  "thumb": "/images/web/main-yap-640.webp",
+   "visa": "/assets/illustrations/visa-06-yap.svg",
    "filters": [
     "entrepreneurship",
     "ai"
@@ -339,9 +339,9 @@ window.SITE = {
    "n": "07",
    "slug": "greentop",
    "title": "GreenTop",
-   "image": "../images/web/main-greentop-1200.webp",
-  "thumb": "../images/web/main-greentop-640.webp",
-   "visa": "../assets/illustrations/visa-07-greentop.svg",
+   "image": "/images/web/main-greentop-1200.webp",
+  "thumb": "/images/web/main-greentop-640.webp",
+   "visa": "/assets/illustrations/visa-07-greentop.svg",
    "filters": [
     "ai",
     "data"
@@ -386,147 +386,147 @@ window.SITE = {
   {
    "title": "Waves of Action Fellow",
    "text": "By the Okeanos Foundation for the Sea, spent 10 days at sea aboard on a traditional Polynesian catamaran in France as a part of a European ocean-advocacy and environmental-education program.",
-   "photo": "../images/web/waves-of-action-640.webp",
-   "stamp": "../assets/illustrations/stamp-01-waves-of-action.svg"
+   "photo": "/images/web/waves-of-action-640.webp",
+   "stamp": "/assets/illustrations/stamp-01-waves-of-action.svg"
   },
   {
    "title": "State Finalist: Jugend Debattiert",
    "text": "Reached the state competition of Jugend Debattiert, Germany’s national youth debate tournament, held under the patronage of the Federal President. One of ~200,000 students competing each year.",
-   "photo": "../images/web/jugend-debattiert-640.webp",
-   "stamp": "../assets/illustrations/stamp-02-jugend-debattiert.svg"
+   "photo": "/images/web/jugend-debattiert-640.webp",
+   "stamp": "/assets/illustrations/stamp-02-jugend-debattiert.svg"
   },
   {
    "title": "Faculty Honors for 4.0 GPA",
    "text": "Awarded to Georgia Tech undergraduates who earn a 4.0 GPA in a semester.",
-   "photo": "../images/web/faculty-honors-640.webp",
-   "stamp": "../assets/illustrations/stamp-03-faculty-honors.svg"
+   "photo": "/images/web/faculty-honors-640.webp",
+   "stamp": "/assets/illustrations/stamp-03-faculty-honors.svg"
   },
   {
    "title": "Rise Global Fellow",
    "text": "One of 100 people selected worldwide by Schmidt Futures and the Rhodes Trust. A global, competitive, lifelong selection with need-based scholarships, mentorship, and career support.",
-   "photo": "../images/web/rise-fellow-640.webp",
-   "stamp": "../assets/illustrations/stamp-04-rise-fellow.svg"
+   "photo": "/images/web/rise-fellow-640.webp",
+   "stamp": "/assets/illustrations/stamp-04-rise-fellow.svg"
   },
   {
    "title": "Rise Summit, Oxford University",
    "text": "The Rise Residential Summit brought all 100 Global Fellows of a cohort together for an in-person program at the University of Oxford.",
-   "photo": "../images/web/rise-summit-640.webp",
-   "stamp": "../assets/illustrations/stamp-05-rise-summit.svg"
+   "photo": "/images/web/rise-summit-640.webp",
+   "stamp": "/assets/illustrations/stamp-05-rise-summit.svg"
   },
   {
    "title": "Georgia Tech CS Honors Student",
    "text": "Studying Computer Science (Honors) at Georgia Tech which is ranked #3 in the US and #1 among public universities for undergraduate engineering.",
-   "photo": "../images/web/georgia-tech-640.webp",
-   "stamp": "../assets/illustrations/stamp-06-georgia-tech.svg"
+   "photo": "/images/web/georgia-tech-640.webp",
+   "stamp": "/assets/illustrations/stamp-06-georgia-tech.svg"
   },
   {
    "title": "START Scholar",
    "text": "The START Scholarship is awarded to high-school students in Germany for exceptional academic achievement and social commitment as one of Germany’s most recognized youth scholarships.",
-   "photo": "../images/web/start-scholar-640.webp",
-   "stamp": "../assets/illustrations/stamp-07-start-scholar.svg"
+   "photo": "/images/web/start-scholar-640.webp",
+   "stamp": "/assets/illustrations/stamp-07-start-scholar.svg"
   },
   {
    "title": "State Representative",
    "text": "Represented my state, Schleswig-Holstein, in national debates and events for the START-Stiftung.",
-   "photo": "../images/web/start-state-representative-640.webp",
-   "stamp": "../assets/illustrations/stamp-08-state-representative.svg"
+   "photo": "/images/web/start-state-representative-640.webp",
+   "stamp": "/assets/illustrations/stamp-08-state-representative.svg"
   }
  ],
  "skills": [
   {
    "name": "Figma",
    "rating": 3,
-   "icon": "../assets/skills/figma.svg"
+   "icon": "/assets/skills/figma.svg"
   },
   {
    "name": "Airtable",
    "rating": 5,
-   "icon": "../assets/skills/airtable.webp"
+   "icon": "/assets/skills/airtable.webp"
   },
   {
    "name": "Notion",
    "rating": 5,
-   "icon": "../assets/skills/notion.png"
+   "icon": "/assets/skills/notion.png"
   },
   {
    "name": "Python",
    "rating": 4,
-   "icon": "../assets/skills/python.webp"
+   "icon": "/assets/skills/python.webp"
   },
   {
    "name": "JavaScript",
    "rating": 4,
-   "icon": "../assets/skills/javascript.png"
+   "icon": "/assets/skills/javascript.png"
   },
   {
    "name": "HTML",
    "rating": 3,
-   "icon": "../assets/skills/html.jpg"
+   "icon": "/assets/skills/html.jpg"
   },
   {
    "name": "CSS",
    "rating": 3,
-   "icon": "../assets/skills/css.webp"
+   "icon": "/assets/skills/css.webp"
   },
   {
    "name": "Java",
    "rating": 3,
-   "icon": "../assets/skills/java.webp"
+   "icon": "/assets/skills/java.webp"
   },
   {
    "name": "CapCut",
    "rating": 5,
-   "icon": "../assets/skills/capcut.png"
+   "icon": "/assets/skills/capcut.png"
   },
   {
    "name": "Opus Clip",
    "rating": 5,
-   "icon": "../assets/skills/opusclip.jpg"
+   "icon": "/assets/skills/opusclip.jpg"
   },
   {
    "name": "Blender",
    "rating": 4,
-   "icon": "../assets/skills/blender.png"
+   "icon": "/assets/skills/blender.png"
   },
   {
    "name": "GitHub",
    "rating": 4,
-   "icon": "../assets/skills/github.svg"
+   "icon": "/assets/skills/github.svg"
   },
   {
    "name": "Microsoft 365",
    "rating": 5,
-   "icon": "../assets/skills/microsoft365.jpg"
+   "icon": "/assets/skills/microsoft365.jpg"
   },
   {
    "name": "SwiftUI",
    "rating": 4,
-   "icon": "../assets/skills/swiftui.png"
+   "icon": "/assets/skills/swiftui.png"
   },
   {
    "name": "Xcode",
    "rating": 4,
-   "icon": "../assets/skills/xcode.png"
+   "icon": "/assets/skills/xcode.png"
   },
   {
    "name": "Apify",
    "rating": 5,
-   "icon": "../assets/skills/apify.svg"
+   "icon": "/assets/skills/apify.svg"
   },
   {
    "name": "ElevenLabs",
    "rating": 3.5,
-   "icon": "../assets/skills/elevenlabs.jpg"
+   "icon": "/assets/skills/elevenlabs.jpg"
   },
   {
    "name": "MediaPipe",
    "rating": 4.5,
-   "icon": "../assets/skills/mediapipe.png"
+   "icon": "/assets/skills/mediapipe.png"
   },
   {
    "name": "Whisper Flow",
    "rating": 4,
-   "icon": "../assets/skills/whisperflow.png"
+   "icon": "/assets/skills/whisperflow.png"
   }
  ],
  "web3formsKey": "ad76d500-b413-486f-bb8d-4af57770c934"
