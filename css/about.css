@@ -210,6 +210,10 @@ p.foil { -webkit-background-clip: text; background-clip: text; color: transparen
   background: var(--card); border: 1px solid var(--line-2);
   background-image: repeating-linear-gradient(0deg, transparent 0 33px, rgba(87, 16, 30, .045) 33px 34px);
 }
+.stamps-side { padding-top: .5rem; }
+.stamps-hint { margin-top: 1.1rem; font-family: var(--hand); font-weight: 600; font-size: 1.45rem; line-height: 1.1; color: var(--wine); transform: rotate(-4deg); transform-origin: left; }
+.stamps-hint span { display: inline-block; margin-left: .15em; transition: transform .35s var(--ease); }
+#stamps:hover .stamps-hint span { transform: translateX(4px); }
 .stamps__page-head { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--wine); opacity: .75; }
 .stamp {
   --base: translate(-50%, -50%);
@@ -227,7 +231,9 @@ p.foil { -webkit-background-clip: text; background-clip: text; color: transparen
 .stamp-card p { margin-top: .5rem; max-width: 34rem; color: var(--ink-2); }
 
 @media (max-width: 760px) {
-  .stage { height: 260svh; }
+  .stamps-side { padding-top: 0; display: flex; align-items: baseline; justify-content: space-between; }
+  .stamps-hint { margin-top: 0; font-size: 1.25rem; }
+  .stage { height: 360svh; }   /* open, zoom into the scrapbook page, slide across to the data page */
   .stamps { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 1rem; padding: 1.25rem; }
   .stamps__page-head { grid-column: 1 / -1; }
   .stamp { --base: translate(0, 0); position: relative; left: auto; top: auto; width: 100%; transform: rotate(var(--r, 0deg)); }

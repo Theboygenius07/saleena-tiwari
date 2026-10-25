@@ -1,6 +1,7 @@
 # kept in the project, not deployed
 start.command
 serve.py
+og.html
 README.md
 images/honors
 images/projects

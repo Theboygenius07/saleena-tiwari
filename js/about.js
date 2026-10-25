@@ -21,6 +21,7 @@
   };
   // where the spine sits and how big a page is, for a given point in the move
   const geo = (p, toPage) => {
+    if (!wide && !toPage) return phoneGeo(p);
     const B = easeIO(clamp01(p / .34)), Z = easeIO(clamp01((p - .4) / .44));
     const spread = wide && !toPage;
     const sx0 = vw / 2 - wb / 2, top0 = (vh - hb) / 2 + 12;
@@ -32,6 +33,16 @@
       pw: mix(wb, spread ? vw / 2 : vw, Z),
       ph: mix(hb, vh, Z),
     };
+  };
+  // on a phone the spread is wider than the screen: open it small enough to see both pages,
+  // zoom into the scrapbook page, then slide across to the data page
+  const phoneGeo = (p) => {
+    const B = easeIO(clamp01(p / .3)), Z = easeIO(clamp01((p - .36) / .26)), P = easeIO(clamp01((p - .68) / .24));
+    const w = mix(wb, Math.min(wb, vw * .47), B), h = w / .704;
+    let sx = mix(vw / 2 - wb / 2, vw / 2, B), top = (vh - h) / 2 + 12, pw = w, ph = h;
+    sx = mix(sx, vw, Z); top = mix(top, 0, Z); pw = mix(pw, vw, Z); ph = mix(ph, vh, Z);   // the scrapbook page fills the screen
+    sx = mix(sx, 0, P);                                                                      // then across to the data page
+    return { B, Z, sx, top, pw, ph };
   };
   const radius = (Z) => [2, 10].map((r) => (r * (1 - Z)).toFixed(1) + "px");
   const render = (p) => {
@@ -57,6 +68,7 @@
     stage.style.setProperty("--hint", (1 - clamp01(p * 9)).toFixed(3));
     if (tpl.firstChild) tpl.style.transform = `scale(${(pw / vw).toFixed(4)})`;
     if (B > .85) stage.classList.add("is-open");
+    if (!auto && !reduce && pathReady) setPath(p > .3);
   };
 
   /* while it's closed, the passport leans toward the cursor and its foil catches the light */
@@ -91,6 +103,21 @@
   }
 
   let cur = 0, target = 0, raf = 0, auto = null;
+  // the address follows the passport: / is the closed passport (home), /about is the passport open
+  let shownAs = null;
+  const startOpen = /^\/about\/?$/.test(location.pathname);
+  let pathReady = !startOpen;      // arriving at /about: leave the address alone until the jump below has landed
+  const aboutTile = document.querySelector('.bar__links a[href="/about"]');
+  const setPath = (opened) => {
+    const want = opened ? "about" : "home";
+    if (want === shownAs) return;
+    shownAs = want;
+    const path = want === "about" ? "/about" : "/";
+    if (location.pathname !== path) history.replaceState(history.state, "", path + location.search + location.hash);
+    document.title = want === "about" ? "About · Saleena Tiwari" : "Saleena Tiwari";
+    if (aboutTile) want === "about" ? aboutTile.setAttribute("aria-current", "page") : aboutTile.removeAttribute("aria-current");
+  };
+  const stageEnd = () => stage.getBoundingClientRect().top + scrollY + stage.offsetHeight - vh;
   const scrollP = () => {
     const r = stage.getBoundingClientRect(), span = stage.offsetHeight - vh;
     return span > 0 ? clamp01(-r.top / span) : 1;
@@ -117,20 +144,38 @@
     measure(); cur = target = 1; render(1);
     addEventListener("resize", () => { measure(); render(1); });
   } else {
-    measure(); cur = target = scrollP(); render(cur);
+    measure();
+    // arriving at /about: start with the passport already open. Done now and again once the page
+    // has loaded, because the browser puts the scroll back to the top when loading finishes.
+    if (startOpen) {
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      const jump = () => {
+        if (scrollY < stageEnd() - 2) {
+          scrollTo(0, stageEnd());
+          // Lenis measures the page lazily; make it measure now, or it clamps the jump back to the top
+          if (window.lenis) { window.lenis.resize(); window.lenis.scrollTo(stageEnd(), { immediate: true, force: true }); }
+        }
+        cur = target = scrollP(); render(cur);
+      };
+      jump();
+      const settle = () => { jump(); pathReady = true; setPath(cur > .3); };
+      if (document.readyState === "complete") requestAnimationFrame(settle); else addEventListener("load", () => requestAnimationFrame(settle), { once: true });
+    }
+    cur = target = scrollP(); render(cur);
     addEventListener("scroll", read, { passive: true });
     addEventListener("resize", () => { measure(); render(cur); read(); });
   }
 
   // picking a page from the bar while the passport is still closed: open it and zoom into that page
   window.passportGo = (a) => {
-    if (reduce || auto || cur > .97) return false;
     const href = a.getAttribute("href");
-    if (href === "/" || href === "/about") {
-      const end = stage.getBoundingClientRect().top + scrollY + stage.offsetHeight - vh;
-      if (window.lenis) window.lenis.scrollTo(end, { duration: 1.6 }); else scrollTo({ top: end, behavior: "smooth" });
+    // home and About are both this page: close the passport, or open it, without leaving
+    if ((href === "/" || href === "/about") && !reduce && !auto) {
+      const to = href === "/" ? 0 : stageEnd();
+      if (window.lenis) window.lenis.scrollTo(to, { duration: 1.6 }); else scrollTo({ top: to, behavior: "smooth" });
       return true;
     }
+    if (reduce || auto || cur > .97) return false;
     auto = { href, from: cur, blend0: blend, t0: 0, ms: 1500 };
     if (window.lenis) window.lenis.stop();
     fetch(href).then((r) => r.text()).then((html) => {
