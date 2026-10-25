@@ -1,0 +1,14 @@
+<!-- visa-02-pantry: drawn by code for Saleena Tiwari's portfolio (assets/illustrations/source/illustrations.mjs) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="60 50 250 300" width="250" height="300"><g>
+  <rect x="150" y="60" width="150" height="280" rx="26" fill="#1E2B40" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></rect>
+  <rect x="163" y="82" width="124" height="236" rx="10" fill="#dff1f9"></rect>
+  <path d="M163 150H287M163 214H287M163 270H287" stroke="#1E2B40" stroke-width="5" opacity="0.5"></path>
+  <circle cx="190" cy="132" r="15" fill="#b5302a" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></circle><path d="M190 117Q194 108 200 108" fill="none" stroke="#3d7a4f" stroke-width="5" stroke-linecap="round"></path>
+  <rect x="224" y="104" width="30" height="44" rx="6" fill="#FFFFFF" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></rect><rect x="224" y="104" width="30" height="12" rx="4" fill="#2f4fa2"></rect>
+  <path d="M184 168L206 206M196 166L190 176" fill="none" stroke="#F08A24" stroke-width="12" stroke-linecap="round"></path><path d="M196 162L202 152M190 164L186 154" stroke="#3d7a4f" stroke-width="5" stroke-linecap="round"></path>
+  <circle cx="250" cy="194" r="16" fill="#3d7a4f" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></circle><circle cx="268" cy="250" r="14" fill="#F2C94C" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></circle><circle cx="196" cy="252" r="16" fill="#b5302a" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></circle>
+  <path d="M163 82L80 106Q70 110 70 120V292Q70 302 80 304L163 318Z" fill="#FFF8EC" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></path>
+  <path d="M163 82L80 106Q70 110 70 120V292Q70 302 80 304L163 318Z" fill="#dce7df"></path>
+  <path d="M163 82L80 106Q70 110 70 120V292Q70 302 80 304L163 318Z" fill="none" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></path>
+  <path d="M92 168V230" stroke="#1E2B40" stroke-width="12" stroke-linecap="round"></path>
+  <path d="M98 128H150M98 270H150" stroke="#3d7a4f" stroke-width="6" stroke-linecap="round" opacity="0.7"></path></g></svg>

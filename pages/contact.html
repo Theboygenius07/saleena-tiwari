@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact · Saleena Tiwari</title>
+  <meta name="description" content="Send Saleena Tiwari a postcard: a message lands straight in her inbox." />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="../fonts/saans-vf.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="../fonts/centold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="../css/fonts.css" />
+    <link rel="stylesheet" href="../css/site.css" />
+  <link rel="stylesheet" href="../css/pages.css" />
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); }; window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body data-page="contact" id="top">
+  <div data-bar></div>
+
+  <main class="page">
+    <header class="title-page">
+      <span class="folio">Page 05</span>
+      <p class="kicker">Postcard</p>
+      <h1 class="display"><span class="display__in">Contact</span></h1>
+      <p class="sub">Write me a postcard. It lands straight in my inbox.</p>
+    </header>
+
+    <section class="sheet sheet--wide">
+      <p class="label">Write to me</p>
+      <div class="postcard">
+        <form class="postcard__write" id="contact-form" novalidate>
+          <p class="postcard__head">Postcard · Postkarte · पोस्टकार्ड</p>
+          <div class="pc-row">
+            <label class="pc-field"><span>From</span><input name="name" id="f-name" autocomplete="name" required /></label>
+            <label class="pc-field"><span>Your email</span><input name="email" type="email" autocomplete="email" required /></label>
+          </div>
+          <label class="pc-field"><span>About</span>
+            <select name="subject" required>
+              <option value="">Pick a topic…</option>
+              <option>Let’s collaborate</option>
+              <option>Job / career opportunity</option>
+              <option>Feedback on my work</option>
+              <option>Research / academia</option>
+              <option>Something else</option>
+            </select>
+          </label>
+          <label class="pc-field"><span>Message</span><textarea name="message" required placeholder="Hi Saleena,"></textarea></label>
+          <button class="btn" type="submit">Send it <span class="btn__arrow" aria-hidden="true">→</span></button>
+          <p class="form-status" id="form-status" role="status"></p>
+        </form>
+        <div class="postcard__address">
+          <img class="postcard__stamp illo" src="../assets/illustrations/postage-stamp.svg" alt="" />
+          <img class="postcard__mark illo thunk" src="../assets/illustrations/postmark.svg" alt="" style="--delay:.2s" />
+          <div class="postcard__to">
+            <p>Saleena Tiwari</p>
+            <p>Atlanta, Georgia</p>
+            <p><a href="mailto:saleenatiwari@gmail.com">saleenatiwari@gmail.com</a></p>
+            <div class="socials" id="socials"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div data-back></div>
+
+  <script src="../js/lenis.min.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/contact.js"></script>
+  <script src="../js/site.js"></script>
+</body>
+</html>

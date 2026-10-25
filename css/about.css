@@ -1,0 +1,208 @@
+/* About: the landing is just the passport. Scrolling opens it and zooms in until the open
+   spread is the page; then the prologue, the reel and the stamps follow. JS (about.js) sets
+   each part's box every frame; everything inside a page is sized in cq units, so it scales
+   with the page as it grows. */
+
+/* ── The stage ── */
+.stage { position: relative; height: 300svh;
+  /* one unit for everything inside a page: a share of the page's width, or of its height when that's tighter */
+  --u: min(1cqw, .704cqh); }
+.stage__sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+.pp-base, .pp-page, .pp-cover { position: absolute; left: 0; top: 0; will-change: transform; }
+.pp-base { z-index: 1; }
+.pp-page { z-index: 2; container-type: size; overflow: hidden; }
+.pp-cover { z-index: 3; transform-origin: 0 50%; transform-style: preserve-3d; }
+.stage__hint {
+  position: absolute; left: 0; right: 0; bottom: 4.5svh; text-align: center; pointer-events: none;
+  font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  opacity: var(--hint, 1);
+}
+
+/* the pages underneath the data page, seen at its edge */
+.pp-base { border-radius: 2px 10px 10px 2px; background: #fff; border: 1px solid rgba(28, 25, 24, .12); }
+.pp-base::before, .pp-base::after { content: ""; position: absolute; inset: -1px; border-radius: inherit; background: #f6f5f2; border: 1px solid rgba(28, 25, 24, .12); z-index: -1; }
+.pp-base::before { transform: translate(6px, 6px); background: #efeee9; }
+.pp-base::after { transform: translate(3px, 3px); }
+
+/* a boarding pass tucked between the pages; its stub pokes out of the side */
+.ticket {
+  position: absolute; z-index: -2; left: calc(100% - 8.6rem); top: 13%;
+  display: flex; background: #fbf6ea; border: 1px solid rgba(28, 25, 24, .14); border-radius: 6px;
+  transform: rotate(7deg); transform-origin: left center;
+}
+.ticket__main { display: grid; gap: .2rem; width: 8.5rem; padding: .7rem .8rem; }
+.ticket__stub { display: grid; gap: .2rem; align-content: start; width: 5.2rem; padding: .7rem .8rem .7rem .9rem; border-left: 1.5px dashed rgba(87, 16, 30, .3); }
+.ticket__k { font-size: .5rem; font-weight: 560; letter-spacing: .16em; text-transform: uppercase; color: var(--wine); }
+.ticket__route { font-size: 1.05rem; font-weight: 560; line-height: 1.1; }
+.ticket__route i { font-style: normal; color: var(--wine); }
+.ticket__meta { font-size: .5rem; letter-spacing: .1em; text-transform: uppercase; color: #6a5a52; }
+.ticket__to { font-size: 1.6rem; font-weight: 560; line-height: 1; }
+.ticket__bar { display: block; height: 1.1rem; margin-top: .35rem; background: repeating-linear-gradient(90deg, #221d1c 0 1px, transparent 1px 3px, #221d1c 3px 5px, transparent 5px 6px, #221d1c 6px 7px, transparent 7px 10px); }
+
+/* ── The data page ── */
+.pp-page {
+  background: #fff; border-radius: 2px 10px 10px 2px; border: 1px solid rgba(28, 25, 24, var(--edge, .12));
+  color: #221d1c;
+}
+.pp-page::before { /* faint security print, and the curve of the page into the spine */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(28, 25, 24, .045), rgba(28, 25, 24, 0) 4%),
+    url("../assets/illustrations/guilloche.svg") 40% 45% / 240% auto no-repeat;
+  opacity: var(--print, 1);
+}
+.dp {
+  position: absolute; inset: 0; padding: 10cqh calc(var(--u) * 7) 0;
+  display: grid; grid-template-columns: calc(var(--u) * 31) minmax(0, 1fr); column-gap: calc(var(--u) * 5); row-gap: 2.6cqh;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-areas: "head head" "photo names" "fields fields" "sign sign" "mrz mrz";
+}
+.dp__head { grid-area: head; display: flex; justify-content: space-between; align-items: baseline; gap: calc(var(--u) * 2); padding-bottom: 1.6cqh; border-bottom: 1px solid rgba(87, 16, 30, .16); color: var(--wine); }
+.dp__title { font-size: calc(var(--u) * 2.4); font-weight: 560; letter-spacing: .26em; text-transform: uppercase; line-height: 1; }
+.dp__title span { margin-left: .8em; font-size: .62em; letter-spacing: .18em; opacity: .7; }
+.dp__code { font-size: calc(var(--u) * 2.2); font-weight: 560; letter-spacing: .08em; line-height: 1; }
+.dp__code span { margin: 0 .3em 0 .9em; font-size: .6em; letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
+.dp__photo { grid-area: photo; position: relative; margin: 0; transform: rotate(-2.5deg); }
+.dp__photo img { width: 100%; aspect-ratio: 35 / 45; object-fit: cover; object-position: 50% 30%; border: calc(var(--u) * 1.3) solid #fff; outline: 1px solid rgba(28, 25, 24, .1); }
+.dp__photo .tape { --tw: calc(var(--u) * 15); height: calc(var(--u) * 3.4); }
+.dp__names { grid-area: names; min-width: 0; }
+.dp__names dl { display: grid; gap: 2.4cqh; }
+.dp__names dd { margin-top: .5cqh; font-size: calc(var(--u) * 6.6); font-weight: 560; letter-spacing: .02em; text-transform: uppercase; line-height: .95; }
+.dp__fields { grid-area: fields; display: grid; grid-template-columns: 1fr 1fr; gap: 2.2cqh calc(var(--u) * 5); align-content: start; }
+.dp__fields .wide { grid-column: 1 / -1; }
+.dp dt, .dp__sign-k { display: block; font-size: calc(var(--u) * 1.75); letter-spacing: .03em; color: #6f625b; line-height: 1.25; }
+.dp__fields dd { margin-top: .3cqh; font-size: calc(var(--u) * 2.85); font-weight: 560; letter-spacing: .045em; text-transform: uppercase; line-height: 1.2; }
+.dp__sign { grid-area: sign; align-self: end; padding-bottom: 1cqh; }
+.signature { display: block; margin-top: .6cqh; font-family: var(--hand); font-weight: 600; font-size: calc(var(--u) * 7); line-height: 1; color: var(--blue-ink); transform: rotate(-3deg); transform-origin: left; width: max-content; }
+.dp__stamp { position: absolute; right: calc(var(--u) * 7); bottom: 17cqh; width: calc(var(--u) * 25); transform: rotate(-11deg); mix-blend-mode: multiply; opacity: .85; pointer-events: none; }
+.mrz {
+  grid-area: mrz; margin: 0 calc(var(--u) * -7); padding: 2.2cqh calc(var(--u) * 7) 3.2cqh; background: #f7f6f3;
+  font-family: "OCR B", "OCR-B", var(--mono); font-size: calc(var(--u) * 3.15); line-height: 1.45; color: #1f1a19; white-space: nowrap; overflow: hidden;
+}
+.mrz span { display: block; width: max-content; }
+/* her pen marks */
+.ring { position: relative; white-space: nowrap; }
+.ring::after { content: ""; position: absolute; inset: -.42em -.8em -.5em -.7em; transform: rotate(-2deg); pointer-events: none; opacity: .8;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40' preserveAspectRatio='none'%3E%3Cpath d='M62 5C34 1 4 9 4 21s22 17 48 16 45-8 44-18S72 3 40 6' fill='none' stroke='%2357101e' stroke-width='1.5' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat; }
+.star { position: relative; }
+.star::after { content: ""; position: absolute; right: -1.2em; top: -1.4em; width: 1.5em; height: 1.5em; background: url("../assets/illustrations/doodle-star.svg") center / contain no-repeat; transform: rotate(12deg); }
+
+/* the opening of another page, drawn at full size and scaled into the data page */
+.pp-tpl { position: absolute; left: 0; top: 0; transform-origin: 0 0; display: none; background: #fff; }
+.pp-page.is-template .pp-tpl { display: block; }
+.pp-page.is-template .dp { display: none; }
+.pp-page.is-template::before { display: none; }
+
+/* ── The cover ── */
+.cover__face, .cover__inside { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.cover__face {
+  container-type: size;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  border-radius: 4px 14px 14px 4px; color: var(--gold);
+  background-color: var(--wine);
+  /* leather grain, and the crease of the spine */
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, .22), rgba(0, 0, 0, 0) 7%, rgba(255, 255, 255, .05) 8%, rgba(255, 255, 255, 0) 9.5%),
+    radial-gradient(rgba(0, 0, 0, .12) 1px, transparent 1.4px), radial-gradient(rgba(255, 255, 255, .03) 1px, transparent 1.4px);
+  background-size: 100% 100%, 5px 5px, 7px 7px;
+}
+.cover__crest { width: calc(var(--u) * 34); }
+.cover__word { margin-top: calc(var(--u) * 5); font-size: calc(var(--u) * 3.6); font-weight: 560; letter-spacing: .5em; text-transform: uppercase; padding-left: .5em; }
+.cover__langs { margin-top: calc(var(--u) * 1.6); font-size: calc(var(--u) * 2.3); letter-spacing: .32em; text-transform: uppercase; opacity: .75; padding-left: .32em; }
+.cover__owner { position: absolute; bottom: 7%; left: 0; right: 0; font-size: calc(var(--u) * 2.3); letter-spacing: .32em; text-transform: uppercase; opacity: .6; padding-left: .32em; }
+/* stickers: die-cut with a white edge, stuck on at an angle */
+.sticker {
+  position: absolute; width: var(--w, 30%); height: auto; transform: rotate(var(--r, 0deg)); pointer-events: none;
+  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff);
+}
+.sticker--flat { filter: none; }
+/* washi tape, torn at both ends */
+.tape {
+  position: absolute; width: var(--tw, 5rem); height: 1.15rem; transform: rotate(var(--tr, 0deg)); pointer-events: none; z-index: 2; opacity: .88;
+  clip-path: polygon(0 8%, 4% 0, 8% 10%, 12% 0, 88% 0, 92% 12%, 96% 0, 100% 10%, 100% 90%, 96% 100%, 92% 88%, 88% 100%, 12% 100%, 8% 90%, 4% 100%, 0 92%);
+}
+.tape--mustard { background: #f0c45a repeating-linear-gradient(90deg, rgba(255, 255, 255, .28) 0 6px, transparent 6px 12px); }
+.tape--sage { background: #a9c79a radial-gradient(circle, rgba(255, 255, 255, .5) 1.4px, transparent 1.6px) 0 0 / 8px 8px; }
+.tape--pink { background: #f3a6c2 repeating-linear-gradient(45deg, rgba(255, 255, 255, .3) 0 4px, transparent 4px 8px); }
+
+/* the inside of the cover: the scrapbook page */
+.cover__inside {
+  container-type: size; transform: rotateY(180deg); overflow: hidden;
+  border-radius: 10px 2px 2px 10px; background: #fff; border: 1px solid rgba(28, 25, 24, .12);
+}
+.cover__inside::before { /* the curve of the page into the spine */
+  content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(270deg, rgba(28, 25, 24, .045), rgba(28, 25, 24, 0) 4%);
+}
+.inside__belongs { position: absolute; left: calc(var(--u) * 9); right: calc(var(--u) * 9); top: 11cqh; font-family: var(--hand); font-weight: 600; font-size: calc(var(--u) * 7.2); line-height: 1.02; color: var(--wine); transform: rotate(-3deg); }
+.polaroid { position: absolute; left: calc(var(--u) * 10); top: 31cqh; width: calc(var(--u) * 47); margin: 0; padding: calc(var(--u) * 2.2) calc(var(--u) * 2.2) 0; background: #fff; outline: 1px solid rgba(28, 25, 24, .1); transform: rotate(-4deg); }
+.polaroid img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.polaroid figcaption { padding: calc(var(--u) * 2) 0 calc(var(--u) * 2.6); font-family: var(--hand); font-weight: 600; font-size: calc(var(--u) * 4.2); text-align: center; line-height: 1; }
+.polaroid .tape { height: calc(var(--u) * 3.6); }
+.inside__sticker { --w: calc(var(--u) * 31); right: calc(var(--u) * 6); top: 33cqh; --r: 8deg; }
+.inside__plane { position: absolute; right: calc(var(--u) * 12); top: 25cqh; width: calc(var(--u) * 22); transform: rotate(-6deg); opacity: .9; }
+.inside__stamp { position: absolute; left: calc(var(--u) * 12); bottom: 11cqh; width: calc(var(--u) * 30); transform: rotate(-9deg); mix-blend-mode: multiply; opacity: .85; }
+.inside__note { position: absolute; right: calc(var(--u) * 9); bottom: 12cqh; width: calc(var(--u) * 38); font-family: var(--hand); font-weight: 600; font-size: calc(var(--u) * 4.6); line-height: 1.05; color: var(--wine); text-align: right; transform: rotate(-4deg); }
+
+/* once open, her signature is written and the machine lines type out */
+.signature { clip-path: inset(-30% 100% -30% 0); }
+.stage.is-open .signature { animation: write 1.5s cubic-bezier(.45, .05, .5, .95) .1s forwards; }
+@keyframes write { to { clip-path: inset(-30% -6% -30% -2%); } }
+.mrz span { clip-path: inset(0 100% 0 0); }
+.stage.is-open .mrz span { animation: type 1.1s steps(44, end) .7s forwards; }
+.stage.is-open .mrz span + span { animation-delay: 1.7s; }
+@keyframes type { to { clip-path: inset(0 0 0 0); } }
+
+/* no motion: the passport lies open as the page */
+.stage.is-static { height: 100svh; }
+.stage.is-static .signature, .stage.is-static .mrz span { clip-path: none; animation: none; }
+
+/* ── Prologue and what she builds ── */
+.after-stage { padding-top: var(--gap); }
+
+/* ── The reel: pictures lift out of their words, pile up, ring the caption, fly off ── */
+.reel { position: relative; height: 290svh; margin-top: clamp(3rem, 8vh, 6rem); }
+.reel__sticky { position: sticky; top: 0; height: 100svh; display: grid; place-items: center; }
+.reel__center { position: relative; z-index: 6; max-width: 26rem; padding: 0 1rem; text-align: center; opacity: var(--cap, 0); transform: translateY(calc((1 - var(--cap, 0)) * 10px)); }
+.reel__title { margin: 1rem 0 1.75rem; font-family: var(--serif); font-size: clamp(2rem, 1.4rem + 2vw, 3rem); line-height: 1.05; letter-spacing: -.02em; }
+
+.fly { position: fixed; inset: 0; z-index: 5; pointer-events: none; visibility: hidden; }
+.fly.is-on { visibility: visible; }
+.card { position: absolute; left: 0; top: 0; width: var(--cw); transform-origin: 50% calc(var(--cw) / 3); will-change: transform, opacity; text-decoration: none; color: var(--ink); pointer-events: none; }
+.fly.is-ring .card { pointer-events: auto; }
+.card__inner { transition: transform .35s var(--ease); }
+.card img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 2px; background: var(--card); outline: 1px solid var(--line-2); outline-offset: -1px; }
+.card span { display: block; margin-top: .5rem; font-size: var(--fs-label); font-weight: 560; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: var(--t, 1); }
+.fly.is-ring .card:hover { z-index: 50 !important; }
+.fly.is-ring .card:hover .card__inner { transform: translateY(-4px); }
+.fly.is-ring .card:hover span { color: var(--wine); }
+
+/* ── Entry stamps: the honours, stamped onto a visa page ── */
+.stamps {
+  position: relative; min-height: 34rem; padding: 1.75rem 2rem;
+  background: var(--card); border: 1px solid var(--line-2);
+  background-image: repeating-linear-gradient(0deg, transparent 0 33px, rgba(87, 16, 30, .045) 33px 34px);
+}
+.stamps__page-head { display: flex; justify-content: space-between; gap: 1rem; font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--wine); opacity: .75; }
+.stamp {
+  --base: translate(-50%, -50%);
+  position: absolute; left: var(--x); top: var(--y); width: var(--s, 150px);
+  transform: translate(-50%, -50%) rotate(var(--r, 0deg));
+  background: none; border: 0; padding: 0; cursor: pointer;
+  mix-blend-mode: multiply;           /* ink on paper: overlapping stamps darken like real ink */
+  transition: transform .4s var(--ease), opacity .3s var(--ease);
+}
+.stamp:hover, .stamp:focus-visible, .stamp.is-on { transform: translate(-50%, -50%) rotate(var(--r, 0deg)) scale(1.06); z-index: 3; }
+.stamp img, .stamp .illo-missing { width: 100%; height: auto; }
+.stamp-card { margin-top: 1.75rem; display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 1.4rem; align-items: start; min-height: 9rem; }
+.stamp-card img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; outline: 1px solid var(--line-2); outline-offset: -1px; }
+.stamp-card h3 { font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.1; letter-spacing: -.01em; }
+.stamp-card p { margin-top: .5rem; max-width: 34rem; color: var(--ink-2); }
+
+@media (max-width: 760px) {
+  .stage { height: 260svh; }
+  .stamps { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem 1rem; padding: 1.25rem; }
+  .stamps__page-head { grid-column: 1 / -1; }
+  .stamp { --base: translate(0, 0); position: relative; left: auto; top: auto; width: 100%; transform: rotate(var(--r, 0deg)); }
+  .stamp:hover, .stamp:focus-visible, .stamp.is-on { transform: rotate(var(--r, 0deg)) scale(1.04); }
+  .stamp-card { grid-template-columns: 5.5rem minmax(0, 1fr); gap: 1rem; }
+}

@@ -1,0 +1,72 @@
+/* Projects: seven visas */
+
+
+/* the index: numbered rows like oyin's process list */
+.index { list-style: none; border-top: 1px solid var(--line); }
+.index li { border-bottom: 1px solid var(--line); }
+.index a {
+  display: grid; grid-template-columns: 2.5rem minmax(10rem, 16rem) minmax(0, 1fr) 1.5rem; gap: 1.5rem; align-items: baseline;
+  padding: 1.15rem 0; text-decoration: none;
+}
+.index__n { font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.index__t { font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.1; letter-spacing: -.01em; transition: color .2s var(--ease); }
+.index__d { color: var(--ink-2); font-size: .9375rem; }
+.index__go { color: var(--muted); text-align: right; transition: transform .3s var(--ease), color .2s var(--ease); }
+.index a:hover .index__t { color: var(--wine); }
+.index a:hover .index__go { color: var(--ink); transform: translateY(3px); }
+.index li.is-hidden, .visa.is-hidden { display: none; }
+
+/* a visa */
+.visa { scroll-margin-top: calc(var(--bar-h) + 1.5rem); }
+/* on this page the margin column is wide enough to carry each visa */
+body[data-page="projects"] { --label-col: clamp(15rem, 25vw, 21rem); }
+.visa { align-items: start; }
+.visa__panel {
+  position: sticky; top: calc(var(--bar-h) + 1.5rem);
+  border: 1px solid var(--line-2); background-color: var(--card);
+  background-image:
+    repeating-radial-gradient(circle at 20% 110%, color-mix(in srgb, var(--accent) 14%, transparent) 0 1px, transparent 1px 10px),
+    repeating-linear-gradient(-60deg, rgba(201, 162, 75, .06) 0 1px, transparent 1px 12px);
+  padding: 1.2rem 1.2rem 1.4rem;
+}
+.visa__head { display: flex; justify-content: space-between; font-size: .625rem; font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--wine); padding-bottom: .75rem; border-bottom: 1px solid rgba(87, 16, 30, .16); }
+.visa__art { padding: 1.4rem 1.2rem .6rem; }
+.visa__meta { display: grid; grid-template-columns: 1fr 1fr; gap: .7rem 1rem; padding-top: .9rem; border-top: 1px solid rgba(87, 16, 30, .12); }
+.visa__meta dt { font-size: .625rem; font-weight: 560; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.visa__meta dd { margin-top: .1rem; font-size: var(--fs-small); line-height: 1.35; }
+.visa__mrz { margin-top: 1rem; font-family: var(--mono); font-size: .625rem; letter-spacing: .14em; color: var(--ink-2); white-space: nowrap; overflow: hidden; }
+
+.visa__title { font-family: var(--serif); font-size: var(--fs-h2); line-height: .98; letter-spacing: -.025em; }
+.visa__tag { margin-top: 1rem; max-width: 32rem; font-size: var(--fs-sub); line-height: 1.45; color: var(--ink-2); }
+.visa__shot { margin-top: 2.25rem; max-width: 40rem; }
+.visa__shot img.shot { width: 100%; background: var(--card); outline: 1px solid var(--line-2); outline-offset: -1px; }
+
+.sections { margin-top: 2.75rem; max-width: 40rem; }
+.sec { display: grid; grid-template-columns: 9.5rem minmax(0, 1fr); gap: 1.5rem; padding: 1.4rem 0; border-top: 1px solid var(--line); }
+.sec h3 { padding-top: .3rem; font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); line-height: 1.3; }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr)); gap: 1.25rem; }
+.stat__n { font-family: var(--serif); font-size: clamp(2rem, 1.5rem + 1.6vw, 2.75rem); line-height: 1; letter-spacing: -.02em; font-variant-numeric: lining-nums; }
+.stat__l { margin-top: .35rem; font-size: var(--fs-small); color: var(--ink-2); line-height: 1.35; }
+
+.video { position: relative; margin-top: 1.5rem; max-width: 40rem; aspect-ratio: 16 / 9; background: var(--ink); overflow: hidden; }
+.video button { all: unset; position: absolute; inset: 0; cursor: pointer; display: grid; place-items: center; }
+.video img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .82; transition: opacity .3s var(--ease); }
+.video button:hover img { opacity: 1; }
+.video__play { position: relative; z-index: 1; display: inline-flex; gap: .6rem; align-items: center; min-height: 2.875rem; padding: 0 1.2rem; background: var(--paper); color: var(--ink); font-size: .9375rem; font-weight: 560; transition: background-color .2s var(--ease); }
+.video button:hover .video__play { background: #fff; }
+.video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.links { display: flex; flex-wrap: wrap; gap: .5rem 1.75rem; margin-top: 2rem; }
+.links a { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .3em; text-decoration-color: var(--line); transition: color .2s var(--ease), text-decoration-color .2s var(--ease); }
+.links a:hover { color: var(--wine); text-decoration-color: currentColor; }
+
+@media (max-width: 900px) {
+  .visa__panel { position: relative; top: auto; max-width: 22rem; }
+  .index a { grid-template-columns: 2rem minmax(0, 1fr) 1.25rem; gap: 1rem; }
+  .index__d { display: none; }
+  .sec { grid-template-columns: 1fr; gap: .4rem; }
+}
+
+/* the entry stamp, pressed on as the visa comes into view */
+.visa__granted { position: absolute; right: -1.4rem; top: 46%; width: clamp(7.5rem, 8.5vw, 9.5rem); mix-blend-mode: multiply; pointer-events: none; transform: rotate(var(--r, -8deg)); opacity: .9; }
+@media (max-width: 900px) { .visa__granted { right: .4rem; top: 44%; width: 7.5rem; } }

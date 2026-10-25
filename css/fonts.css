@@ -1,0 +1,13 @@
+/* Two families do all the work: Saans for reading and UI, Centold for display.
+   Caveat (Google Fonts, About page only) is her handwriting in the passport. */
+@font-face {
+  /* one variable file, trimmed to the weights the site uses (350–700) */
+  font-family: "Saans";
+  src: url("../fonts/saans-vf.woff2") format("woff2-variations"), url("../fonts/saans-vf.woff2") format("woff2");
+  font-weight: 350 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Centold";
+  src: url("../fonts/centold.woff2") format("woff2"), url("../fonts/CENTOLD.woff") format("woff");
+  font-weight: 400; font-style: normal; font-display: swap;
+}

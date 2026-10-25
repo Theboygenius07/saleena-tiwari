@@ -1,0 +1,115 @@
+/* Craft (luggage), Education (itinerary), Contact (postcard) */
+
+/* ── Craft: the carry-on (her 3D mini me) and the luggage tags ── */
+.carry { display: grid; grid-template-columns: minmax(0, 24rem) minmax(0, 1fr); gap: clamp(1.75rem, 5vw, 5rem); align-items: end; }
+.carry__frame { position: relative; aspect-ratio: 4 / 5; background: var(--card); border: 1px solid var(--line-2); }
+.carry__model { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
+.carry__model.dragging { cursor: grabbing; }
+.carry__model canvas { width: 100%; height: 100%; display: block; }
+.carry__tag { position: absolute; left: 1rem; top: .95rem; font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--wine); }
+.carry .read { padding-bottom: .25rem; }
+
+.tags { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1.1rem 1.25rem; margin-top: 2rem; padding-left: .75rem; }
+/* a luggage tag: coloured card, angled end, reinforced eyelet, a bit of string */
+.ltag { --cut: 1.15rem; position: relative; transform: rotate(var(--r, 0deg)); transform-origin: calc(var(--cut) * .62) 50%; }
+.ltag__body {
+  position: relative; display: flex; align-items: center; gap: .7rem;
+  min-height: 4.1rem; padding: .7rem .95rem .7rem calc(var(--cut) + 1.15rem);
+  background: var(--c); color: var(--fg);
+  clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, var(--cut) 100%, 0 50%);
+}
+.ltag__body::before { /* the eyelet, with its reinforcing ring */
+  content: ""; position: absolute; left: calc(var(--cut) * .62); top: 50%; width: .62rem; height: .62rem; transform: translate(-50%, -50%);
+  border-radius: 50%; background: var(--paper); border: 2.5px solid rgba(0, 0, 0, .16);
+}
+.ltag__string { position: absolute; z-index: 1; left: calc(var(--cut) * .62 - 23px); top: 50%; width: 30px; height: 24px; margin-top: -12px; overflow: visible; pointer-events: none; }
+.ltag__string path { fill: none; stroke: #a8885c; stroke-width: 1.4; stroke-linecap: round; }
+.ltag img { flex: none; width: 1.75rem; height: 1.75rem; padding: 3px; object-fit: contain; background: #fff; border-radius: 6px; }
+.ltag__text { min-width: 0; display: grid; gap: .15rem; }
+.ltag__name { font-size: .9375rem; font-weight: 560; line-height: 1.15; }
+.ltag__no { font-size: .5625rem; font-weight: 560; letter-spacing: .14em; text-transform: uppercase; opacity: .7; }
+.ltag__code { margin-left: auto; padding-left: .4rem; font-size: 1.45rem; font-weight: 560; letter-spacing: -.01em; line-height: 1; opacity: .92; }
+.ltag:hover { animation: swing 1s cubic-bezier(.3, .7, .4, 1); }
+@keyframes swing {
+  0% { transform: rotate(var(--r, 0deg)); }
+  22% { transform: rotate(calc(var(--r, 0deg) + 7deg)); }
+  48% { transform: rotate(calc(var(--r, 0deg) - 4deg)); }
+  74% { transform: rotate(calc(var(--r, 0deg) + 1.8deg)); }
+  100% { transform: rotate(var(--r, 0deg)); }
+}
+
+/* ── Education: the itinerary ── */
+.map { position: relative; }
+.map img.illo, .map__svg svg { width: 100%; height: auto; display: block; }
+.map__label {
+  position: absolute; left: var(--x); top: var(--y); transform: translate(.85rem, -50%);
+  padding: .3rem .5rem .32rem; background: var(--paper); box-shadow: inset 0 0 0 1px var(--line);
+  font-size: var(--fs-small); font-weight: 560; line-height: 1.15; white-space: nowrap;
+}
+.map__label small { display: block; margin-top: .12rem; font-size: .625rem; font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.map__label--left { transform: translate(calc(-100% - .85rem), -50%); text-align: right; }
+.map__svg .pin { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .45s var(--ease), opacity .25s var(--ease); }
+.map__svg .pin:not(.is-down) { transform: translateY(-24px); opacity: 0; }
+.map.is-live .map__label { opacity: 0; transition: opacity .4s var(--ease); }
+.map.is-live .map__label.is-in { opacity: 1; }
+
+.legs { list-style: none; border-top: 1px solid var(--line); }
+.leg { display: grid; grid-template-columns: 2.5rem minmax(10rem, 15rem) minmax(0, 1fr) 6rem; gap: 1.5rem; padding: 1.75rem 0; border-bottom: 1px solid var(--line); align-items: start; }
+.leg__n { font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; color: var(--muted); padding-top: .55rem; font-variant-numeric: tabular-nums; }
+.leg__place { font-family: var(--serif); font-size: var(--fs-h3); line-height: 1.1; letter-spacing: -.01em; }
+.leg__place small { display: block; margin-top: .45rem; font-family: var(--sans); font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.leg ul { list-style: none; display: grid; gap: .9rem; padding-top: .3rem; }
+.leg li strong { font-weight: 560; }
+.leg li span { display: block; margin-top: .15rem; color: var(--ink-2); font-size: .9375rem; }
+.leg__stamp { width: 6rem; transform: rotate(var(--r, -6deg)); mix-blend-mode: multiply; opacity: .9; }
+
+/* ── Contact: the postcard ── */
+.postcard { position: relative; display: grid; grid-template-columns: 1.15fr 1fr; background: var(--card); border: 1px solid var(--line-2); }
+.postcard__write { padding: clamp(1.5rem, 3.2vw, 2.75rem); border-right: 1px solid var(--line); }
+.postcard__address { position: relative; padding: clamp(1.5rem, 3.2vw, 2.75rem); min-height: 27rem; }
+.postcard__head { margin-bottom: 1.75rem; font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--wine); }
+.pc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.pc-field { display: block; margin-bottom: 1.4rem; }
+.pc-field > span { display: block; font-size: var(--fs-label); font-weight: 560; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.pc-field input, .pc-field select, .pc-field textarea {
+  width: 100%; padding: .5rem 0; font: inherit; color: var(--ink); background: transparent;
+  border: 0; border-bottom: 1px solid var(--line); border-radius: 0; outline: none; appearance: none;
+  transition: border-color .2s var(--ease);
+}
+.pc-field select { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%231c1918' stroke-width='1.2'/%3E%3C/svg%3E") right .2rem center no-repeat; padding-right: 1.5rem; cursor: pointer; }
+.pc-field input:focus, .pc-field select:focus, .pc-field textarea:focus { border-color: var(--ink); }
+.pc-field textarea {
+  min-height: 10rem; resize: vertical; line-height: 2rem; padding-top: .25rem; border-bottom: 0;
+  background-image: repeating-linear-gradient(0deg, transparent 0 calc(2rem - 1px), var(--line) calc(2rem - 1px) 2rem); background-attachment: local;
+}
+.pc-field ::placeholder { color: var(--muted); opacity: 1; }
+.form-status { min-height: 1.4rem; margin-top: 1rem; font-size: var(--fs-small); color: var(--muted); }
+.form-status.ok { color: #2f6a43; } .form-status.err { color: #a32b25; }
+.postcard__stamp { position: absolute; right: clamp(1.5rem, 3.2vw, 2.75rem); top: clamp(1.5rem, 3.2vw, 2.75rem); width: 7rem; transform: rotate(2deg); }
+.postcard__mark { position: absolute; right: calc(clamp(1.5rem, 3.2vw, 2.75rem) + 4.4rem); top: calc(clamp(1.5rem, 3.2vw, 2.75rem) + 2rem); width: 9rem; --r: -8deg; transform: rotate(var(--r)); mix-blend-mode: multiply; opacity: .85; }
+.postcard__to { position: absolute; left: clamp(1.5rem, 3.2vw, 2.75rem); right: clamp(1.5rem, 3.2vw, 2.75rem); bottom: clamp(1.5rem, 3.2vw, 2.75rem); }
+.postcard__to p { padding: .6rem 0 .45rem; border-bottom: 1px solid var(--line); font-family: var(--serif); font-size: clamp(1.25rem, 1.05rem + .6vw, 1.6rem); line-height: 1.1; }
+.postcard__to p a { text-decoration: none; transition: color .2s var(--ease); }
+.postcard__to p a:hover { color: var(--wine); }
+.socials { display: flex; flex-wrap: wrap; gap: .5rem 1.4rem; margin-top: 1.5rem; font-size: var(--fs-small); }
+.socials a { text-decoration: none; color: var(--ink-2); transition: color .2s var(--ease); }
+.socials a:hover { color: var(--wine); }
+
+@media (max-width: 900px) {
+  .carry { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .carry__frame { max-width: 22rem; }
+  .leg { grid-template-columns: 2rem minmax(0, 1fr) 4.5rem; gap: .5rem 1rem; }
+  .leg__place { grid-column: 2; }
+  .leg__stamp { grid-column: 3; grid-row: 1; width: 4.5rem; }
+  .leg ul { grid-column: 2 / -1; }
+  .postcard { grid-template-columns: minmax(0, 1fr); }
+  .postcard__write { border-right: 0; border-bottom: 1px solid var(--line); }
+  .postcard__address { min-height: 23rem; }
+  .pc-row { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .map__label { font-size: .75rem; padding: .2rem .35rem; }
+  .map__label small { display: none; }
+  .map__label--below-sm { transform: translate(-36%, .8rem); }
+}
+@media (max-width: 760px) {
+  .tags { grid-template-columns: minmax(0, 1fr); gap: .8rem; padding-left: .9rem; }
+}

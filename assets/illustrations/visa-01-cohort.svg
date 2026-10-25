@@ -1,0 +1,11 @@
+<!-- visa-01-cohort: drawn by code for Saleena Tiwari's portfolio (assets/illustrations/source/illustrations.mjs) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="55 31 326 318" width="326" height="318"><g>
+  <path d="M120 150Q120 104 200 104Q280 104 280 150V318Q280 340 258 340H142Q120 340 120 318Z" fill="#3358ff" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></path>
+  <path d="M152 104Q152 70 200 70Q248 70 248 104" fill="none" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></path>
+  <path d="M120 200Q200 226 280 200" fill="none" stroke="#2641bd" stroke-width="10"></path>
+  <rect x="150" y="240" width="100" height="74" rx="16" fill="#2641bd" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></rect>
+  <path d="M168 262H232" stroke="#adbcff" stroke-width="7" stroke-linecap="round"></path>
+  <path d="M120 150Q120 104 200 104Q280 104 280 150V318Q280 340 258 340H142Q120 340 120 318Z" fill="none" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></path>
+  <path d="M262 92Q262 40 316 40H336Q372 40 372 76Q372 112 336 112H306L286 132L290 106Q262 100 262 92Z" fill="#FFF8EC" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></path>
+  <circle cx="300" cy="76" r="8" fill="#3358ff"></circle><circle cx="324" cy="76" r="8" fill="#F8A81B"></circle><circle cx="348" cy="76" r="8" fill="#b5302a"></circle>
+  <path d="M86 92L92 108L108 114L92 120L86 136L80 120L64 114L80 108Z" fill="#F8C93C" stroke="#1E2B40" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"></path></g></svg>
